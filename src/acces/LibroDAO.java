@@ -19,7 +19,7 @@ public class LibroDAO {
     //Método para acción "Listar todos"
     public List listarTodos(){
         List<LibroModel> datosLibros = new ArrayList<>();
-        String consultaSql = "SELECT producto.prod_id, producto.prod_titulo, libro.lib_anio, autor.aut_nombre, autor.aut_apellido, autor.aut_id FROM libro JOIN producto ON producto.prod_id = libro.lib_id_fk JOIN autor ON autor.aut_id = libro.lib_autor_fk ORDER BY producto.prod_id ASC";
+        String consultaSql = "SELECT producto.prod_id, producto.prod_titulo, libro.lib_anio, autor.aut_nombre, autor.aut_apellido, autor.aut_id FROM libro JOIN producto ON producto.prod_id = libro.lib_id_fk JOIN autor ON libro.lib_autor_fk = autor.aut_id ORDER BY producto.prod_id ASC";
         try {
             //conectando y consultando
             con = conect.getConnection();
@@ -32,7 +32,7 @@ public class LibroDAO {
                 lib.setTitulo(rs.getString(2));
                 lib.setLib_anio(rs.getInt(3));
                 lib.setAutor(aut_nombre);
-                lib.setAutor_id_fk(6);
+                lib.setAutor_id_fk(rs.getInt(6));
                 datosLibros.add(lib);
             }
         }catch (Exception ex){

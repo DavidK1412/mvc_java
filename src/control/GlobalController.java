@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -25,12 +26,15 @@ public class GlobalController implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+    //CONTROLAR CADA VEZ QUE SE DA CLICK
         if(e.getSource() == this.view.getBtnShowAll()){
-            System.out.println("click");
             try{
                 listAll(view.resultadoTable);
+                view.status.setForeground(Color.GREEN); //Coloreando mensajes
+                view.status.setText("Operación realizada con éxito!");
             }catch (Exception exp){
-                System.out.println("Fallo: " + e);
+                view.errorLabel.setForeground(Color.RED);
+                view.errorLabel.setText("Error!: " + exp.getMessage());
             }
         }
     }
