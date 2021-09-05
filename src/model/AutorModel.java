@@ -6,6 +6,8 @@ public class AutorModel {
     private String aut_apellido;
     private String nacionalidad = null;
 
+    public AutorModel(){}
+
     public AutorModel(int aut_id, String aut_nombre, String aut_apellido) {
         this.aut_id = aut_id;
         this.aut_nombre = aut_nombre;

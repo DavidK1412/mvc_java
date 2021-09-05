@@ -4,6 +4,8 @@ public class ProductModel {
     private int prod_id;
     private String prod_titulo;
 
+    public ProductModel(){}
+
     public ProductModel(int prod_id, String prod_titulo) {
         this.prod_id = prod_id;
         this.prod_titulo = prod_titulo;
