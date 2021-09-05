@@ -48,9 +48,14 @@ public class GlobalController implements ActionListener {
             System.out.println("Click");
             try {
                 ControlClear.limpiarTabla(view);
-                controlAdd.add(view);
-                view.status.setForeground(Color.GREEN); //Coloreando mensajes
-                view.status.setText("Agregado con éxito!");
+                int errAdd = controlAdd.add(view);
+                if(errAdd == 1) {
+                    view.status.setForeground(Color.GREEN); //Coloreando mensajes
+                    view.status.setText("Agregado con éxito!");
+                }else{
+                    view.status.setForeground(Color.RED); //Coloreando mensajes
+                    view.status.setText("No se pudo agregar");
+                }
                 ControlClear.limpiarTF(view);
             }catch (Exception exc){
                 view.status.setForeground(Color.RED); //Coloreando mensajes

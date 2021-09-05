@@ -17,6 +17,19 @@ public class AutorDAO {
     public int agregarAutor(String nom, String apellido){
         String nacionalidad = "none";
         int r = 0;
+        String comprobarSQL = "SELECT autor.aut_id FROM autor WHERE autor.aut_nombre LIKE ? AND autor.aut_apellido LIKE ?";
+        try{   //COMPROBANDO SI EL AUTOR YA EXISTE PARA EVITAR CREAR MUCHOS
+            con = connection.getConnection();
+            ps = con.prepareStatement(comprobarSQL);
+            ps.setString(1, "%"+nom+"%");
+            ps.setString(2, "%" +apellido+ "%");
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                return 1;
+            }
+        }catch (Exception exc){
+            exc.printStackTrace();
+        }
         String sql = "INSERT INTO autor(aut_nombre, aut_apellido, aut_nacionalidad) VALUES(?,?,?)";
         try{ //INTENTA AÑADIR AL AUTOR
             con = connection.getConnection();

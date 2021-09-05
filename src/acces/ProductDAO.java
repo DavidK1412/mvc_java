@@ -1,7 +1,9 @@
 package acces;
 
 import utils.connection;
+import view.viewMain;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +16,9 @@ public class ProductDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    public int agregarProducto(String nom){
+    public int agregarProducto(String nom, viewMain view){
         int r = 0;
+
         String sql = "INSERT INTO producto(prod_titulo) VALUES(?)";
         try{
             con = connection.getConnection();
