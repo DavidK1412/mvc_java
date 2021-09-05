@@ -36,9 +36,11 @@ public class GlobalController implements ActionListener {
                 ControlClear.limpiarTabla(view);
                 ControlListAll.listAll(view ,view.resultadoTable, model, libDAO); //Método para listar todos los elementos
                 view.status.setForeground(Color.GREEN); //Coloreando mensajes
-                view.status.setText("Operación realizada con éxito!");
+                view.status.setText("Busqueda realizada con éxito!");
                 ControlClear.limpiarTF(view);
             }catch (Exception exp) {
+                view.status.setForeground(Color.RED); //Coloreando mensajes
+                view.status.setText("Error!");
                 view.errorLabel.setForeground(Color.RED); //En caso de que hayan errores, se escriben en pantalla
                 view.errorLabel.setText("Error!: " + exp.getMessage());
             }
@@ -48,9 +50,11 @@ public class GlobalController implements ActionListener {
                 ControlClear.limpiarTabla(view);
                 controlAdd.add(view);
                 view.status.setForeground(Color.GREEN); //Coloreando mensajes
-                view.status.setText("Operación realizada con éxito!");
+                view.status.setText("Agregado con éxito!");
                 ControlClear.limpiarTF(view);
             }catch (Exception exc){
+                view.status.setForeground(Color.RED); //Coloreando mensajes
+                view.status.setText("Error!");
                 view.errorLabel.setForeground(Color.RED); //En caso de que hayan errores, se escriben en pantalla
                 view.errorLabel.setText("Error!: " + exc.getMessage());
             }

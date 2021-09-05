@@ -60,11 +60,13 @@ public class LibroDAO {
                 ps.setString(1, "%"+ aut.getAut_nombre() +"%");
                 ps.setString(2, "%" + aut.getAut_apellido() + "%");
                 rs = ps.executeQuery();
-                lib.setAutor_id_fk(rs.getInt(1));
+                if(rs.next())
+                    lib.setAutor_id_fk(rs.getInt(1));
                 ps = con.prepareStatement(sql3);
                 ps.setString(1, "%" + lib.getTitulo() + "%");
                 rs = ps.executeQuery();
-                lib.setId_fk(rs.getInt(1));
+                if(rs.next())
+                    lib.setId_fk(rs.getInt(1));
 
             }catch (Exception exc){
                 exc.printStackTrace();
