@@ -6,7 +6,6 @@ public class viewMain extends javax.swing.JFrame {
 
     public viewMain() {
         initComponents();
-
     }
 
     private void initComponents() {
@@ -223,5 +222,10 @@ public class viewMain extends javax.swing.JFrame {
     public javax.swing.JLabel status;
     private javax.swing.JLabel tituloLabel;
     public javax.swing.JTextField tituloLibroTF;
+
+    public JButton getBtnShowAll() {
+        return btnShowAll;
+    }
+
     // End of variables declaration
 }

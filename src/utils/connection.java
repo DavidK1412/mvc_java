@@ -39,8 +39,4 @@ public class connection {
         }
         return conn;
     }
-
-    public static void main(String[] args) {
-        getConnection();
-    }
 }
