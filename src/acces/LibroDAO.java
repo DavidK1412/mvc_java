@@ -3,10 +3,7 @@ import model.AutorModel;
 import model.LibroModel;
 import view.viewMain;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 import model.ProductModel;
 import utils.connection;
@@ -36,7 +33,11 @@ public class LibroDAO {
             rs = ps.executeQuery();
             while (rs.next()){
                 LibroModel lib = new LibroModel();
-                String aut_nombre = rs.getString(4) + " " + rs.getString(5);
+                String aut_nombre = rs.getString(4);
+                String ape = rs.getString(5);
+                if(ape != null) { //Verificando si autor tiene apellido
+                    aut_nombre = rs.getString(4) + " " + ape;
+                }
                 lib.setId_fk(rs.getInt(1));
                 lib.setTitulo(rs.getString(2));
                 lib.setLib_anio(rs.getInt(3));
@@ -66,9 +67,16 @@ public class LibroDAO {
                 if (rs.next())
                     lib.setId_fk(rs.getInt(1));
                 String sqlSegunda = "SELECT autor.aut_id FROM autor WHERE autor.aut_nombre = ? AND autor.aut_apellido = ?";
+                if (aut.getAut_apellido() == " "){ //COMPRUEBA SI EL USUARIO INGRESO APELLIDOS
+                    sqlSegunda = "SELECT autor.aut_id FROM autor WHERE autor.aut_nombre = ? AND autor.aut_nacionalidad = ?";
+                }
                 ps = con.prepareStatement(sqlSegunda);
                 ps.setString(1, aut.getAut_nombre());
-                ps.setString(2, aut.getAut_apellido());
+                if (aut.getAut_apellido() != " ") { //COMPRUEBA SI EL USUARIO INGRESO APELLIDOS
+                    ps.setString(2, aut.getAut_apellido());
+                }else{
+                    ps.setString(2, "Exists");
+                }
                 rs = ps.executeQuery();
                 if(rs.next() == true)
                     lib.setAutor_id_fk(rs.getInt(1));
@@ -89,11 +97,18 @@ public class LibroDAO {
     private int consultaTitulo(ProductModel pro, AutorModel aut, viewMain view){
         try {
             String consultaSQL = "SELECT p.prod_titulo, p.prod_id FROM libro JOIN autor a on libro.lib_autor_fk = a.aut_id JOIN producto p on p.prod_id = libro.lib_id_fk WHERE p.prod_titulo = ? AND a.aut_nombre = ? AND a.aut_apellido = ?";
+            if (aut.getAut_apellido() == " ") { //COMPRUEBA SI EL AUTOR TIENE APELLIDO
+                consultaSQL = "SELECT p.prod_titulo, p.prod_id FROM libro JOIN autor a on libro.lib_autor_fk = a.aut_id JOIN producto p on p.prod_id = libro.lib_id_fk WHERE p.prod_titulo = ? AND a.aut_nombre = ? AND a.aut_nacionalidad = ?";
+            }
             con = connection.getConnection();
             ps = con.prepareStatement(consultaSQL);
             ps.setString(1, pro.getProd_titulo());
             ps.setString(2, aut.getAut_nombre());
-            ps.setString(3, aut.getAut_apellido());
+            if (aut.getAut_apellido() != " ") { //COMPRUEBA SI EL USUARIO INGRESO APELLIDOS
+                ps.setString(3, aut.getAut_apellido());
+            }else{ //SI NO TIENE APELLIDO INSERTADO, SE EVITA REPETIR MEDIANTE LA NACIONALIDAD
+                ps.setString(3, "Exists");
+            }
             rs = ps.executeQuery();
             if (rs.next()){
                 JOptionPane.showMessageDialog(view, "Ya existe un producto con ese titulo para ese autor!");

@@ -36,7 +36,7 @@ public class viewMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("OPERACIONES"));
-        jPanel1.setPreferredSize(new java.awt.Dimension(600, 190));
+        jPanel1.setPreferredSize(new java.awt.Dimension(600, 226));
 
         tituloLabel.setText("Titulo Libro:");
 

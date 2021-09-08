@@ -54,7 +54,7 @@ public class GlobalController implements ActionListener {
                     view.status.setForeground(Color.RED); //Coloreando mensajes
                     view.status.setText("No se pudo agregar");
                 }
-                ControlClear.limpiarTF(view);
+                ControlListAll.listAll(view, view.resultadoTable, model, libDAO);
             }catch (Exception exc){
                 view.status.setForeground(Color.RED); //Coloreando mensajes
                 view.status.setText("Error!");
