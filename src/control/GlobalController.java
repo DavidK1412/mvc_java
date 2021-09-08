@@ -31,7 +31,6 @@ public class GlobalController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     //CONTROLAR CADA VEZ QUE SE DA CLICK
         if(e.getSource() == this.view.getBtnShowAll()){
-            System.out.println("Click");
             try{
                 ControlClear.limpiarTabla(view);
                 ControlListAll.listAll(view ,view.resultadoTable, model, libDAO); //Método para listar todos los elementos
@@ -45,7 +44,6 @@ public class GlobalController implements ActionListener {
                 view.errorLabel.setText("Error!: " + exp.getMessage());
             }
         }else if(e.getSource() == this.view.getBtnCrear() ){
-            System.out.println("Click");
             try {
                 ControlClear.limpiarTabla(view);
                 int errAdd = controlAdd.add(view);

@@ -13,7 +13,7 @@ public class ControlAdd {
     AutorModel autorModel = new AutorModel();
     ProductModel productModel = new ProductModel();
     public int add(viewMain view){
-        //No es necesario llenar las ID ya que son autoincrementables
+        //No es necesario llenar las ID ya que son autoincrementables, en caso de que se llenen tomarán valores
         if((view.autoridTF.getText().isEmpty() != true && view.idTF.getText().isEmpty() != true) ) {
             int autId = Integer.parseInt(view.autoridTF.getText());
             int libId = Integer.parseInt(view.idTF.getText());
@@ -22,7 +22,30 @@ public class ControlAdd {
             autorModel.setAut_id(autId);
             productModel.setProd_id(libId);
         }
+        int comprobacionCampos = comprobarVacios(view);
+        if(comprobacionCampos == 0) {
+            return 0;
+        }else {
+            String libTitulo = view.tituloLibroTF.getText();
+            int libAnio = Integer.parseInt(view.annioLibroTF.getText());
+            String autLibro = view.autorTF.getText();
+            if(autLibro.contains(" ")) { //Al la tabla autor tener columnas nombre y apellido, hay que separar el nombre y el apellido del autor
+                String[] nombreAutor = autLibro.split(" ", 2);
+                autorModel.setAut_nombre(nombreAutor[0]);
+                autorModel.setAut_apellido(nombreAutor[1]);
+            }else{
+                autorModel.setAut_nombre(autLibro);
+                autorModel.setAut_apellido(" ");
+            }
+            libroModel.setLib_anio(libAnio);
+            productModel.setProd_titulo(libTitulo);
+        }
+        int r = libroDAO.agregarLibro(libroModel, productModel, autorModel, view);
+        return 1;
+    }
 
+    //VERIFICANDO SI CAMPOS ESTÁN VACIOS
+    public int comprobarVacios(viewMain view){
         if(view.tituloLibroTF.getText().isEmpty() == true){
             JOptionPane.showMessageDialog(view, "Por favor llenar campo de titulo");
             return 0;
@@ -32,17 +55,7 @@ public class ControlAdd {
         }else if (view.autorTF.getText().isEmpty() == true){
             JOptionPane.showMessageDialog(view, "Por favor llenar campo de Nombre Autor");
             return 0;
-        }else {
-            String libTitulo = view.tituloLibroTF.getText();
-            int libAnio = Integer.parseInt(view.annioLibroTF.getText());
-            String autLibro = view.autorTF.getText();
-            String[] nombreAutor = autLibro.split(" ", 2);
-            libroModel.setLib_anio(libAnio);
-            autorModel.setAut_nombre(nombreAutor[0]);
-            autorModel.setAut_apellido(nombreAutor[1]);
-            productModel.setProd_titulo(libTitulo);
-            int r = libroDAO.agregarLibro(libroModel, productModel, autorModel, view);
-            return r;
         }
+        return 1;
     }
 }

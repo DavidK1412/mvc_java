@@ -17,19 +17,9 @@ public class AutorDAO {
     public int agregarAutor(String nom, String apellido){
         String nacionalidad = "none";
         int r = 0;
-        String comprobarSQL = "SELECT autor.aut_id FROM autor WHERE autor.aut_nombre LIKE ? AND autor.aut_apellido LIKE ?";
-        try{   //COMPROBANDO SI EL AUTOR YA EXISTE PARA EVITAR CREAR MUCHOS
-            con = connection.getConnection();
-            ps = con.prepareStatement(comprobarSQL);
-            ps.setString(1, "%"+nom+"%");
-            ps.setString(2, "%" +apellido+ "%");
-            rs = ps.executeQuery();
-            if(rs.next()) {
-                return 1;
-            }
-        }catch (Exception exc){
-            exc.printStackTrace();
-        }
+        int sr = comprobarAutor(nom, apellido);
+        if (sr == 1)
+            return sr; //Si ya existe un autor, no añade
         String sql = "INSERT INTO autor(aut_nombre, aut_apellido, aut_nacionalidad) VALUES(?,?,?)";
         try{ //INTENTA AÑADIR AL AUTOR
             con = connection.getConnection();
@@ -38,10 +28,26 @@ public class AutorDAO {
             ps.setString(2, apellido);
             ps.setString(3, nacionalidad);
             r = ps.executeUpdate();
-            if (r == 1){ return 1;} else{ return 0;} //RETORNARÁ SI LA INSERCIÓN SE HIZO BIEN
         }catch (Exception exc){
             exc.printStackTrace();
         }
-        return r;
+        return r; //RETORNA SI LA INSERCIÓN DEL AUTOR SE HIZO BIEN
+    };
+
+    private int comprobarAutor(String nom, String apellido){ //Verificar si el autor ya existe para no añadirlo
+        String comprobarSQL = "SELECT autor.aut_id FROM autor WHERE autor.aut_nombre = ? AND autor.aut_apellido = ?";
+        try{
+            con = connection.getConnection();
+            ps = con.prepareStatement(comprobarSQL);
+            ps.setString(1, nom);
+            ps.setString(2, apellido);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                return 1;
+            }
+        }catch (Exception exc){
+            exc.printStackTrace();
+        }
+        return 0;
     };
 }
