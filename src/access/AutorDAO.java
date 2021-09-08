@@ -1,11 +1,10 @@
-package acces;
+package access;
 
 import utils.connection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 
 public class AutorDAO {
     //Instanciando hacía la clase connection en el paquete utils para poder acceder a la base de datos

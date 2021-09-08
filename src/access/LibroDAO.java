@@ -1,4 +1,4 @@
-package acces;
+package access;
 import model.AutorModel;
 import model.LibroModel;
 import view.viewMain;
@@ -272,6 +272,37 @@ public class LibroDAO {
             if(r == 1){
                 r = productDAO.eliminarProducto(id);
             }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return r;
+    }
+
+    //METODOS ACTUALIZAR
+    public int actualizarAnnio(int annioLib, int idLib){
+        int r = 0;
+        String actualizarSql = "UPDATE libro SET libro.lib_anio = ? WHERE lib_id_fk = ?";
+        try {
+            con = connection.getConnection();
+            ps = con.prepareStatement(actualizarSql);
+            ps.setInt(1, annioLib);
+            ps.setInt(2, idLib);
+            r = ps.executeUpdate();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return r;
+    }
+
+    public int actualizarAutorId(int autId, int idLib){
+        int r = 0;
+        String actualizarSql = "UPDATE libro SET libro.lib_autor_fk = ? WHERE libro.lib_id_fk = ?";
+        try{
+            con = connection.getConnection();
+            ps = con.prepareStatement(actualizarSql);
+            ps.setInt(1, autId);
+            ps.setInt(2, idLib);
+            r = ps.executeUpdate();
         }catch (Exception ex){
             ex.printStackTrace();
         }

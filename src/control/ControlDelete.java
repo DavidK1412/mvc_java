@@ -1,7 +1,7 @@
 package control;
 
 import view.viewMain;
-import acces.LibroDAO;
+import access.LibroDAO;
 
 import javax.swing.*;
 

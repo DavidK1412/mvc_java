@@ -1,4 +1,4 @@
-package acces;
+package access;
 
 import utils.connection;
 
@@ -42,5 +42,21 @@ public class ProductDAO {
         }
         return r;
     }
+
+    //MÉTODO PARA ACTUALIZAR EL TITULO DEL PRODUCTO
+    public int actualizarTitulo(String titulo, int idProd){
+        int r = 0;
+        String actualizarSql = "UPDATE producto SET producto.prod_titulo = ? WHERE producto.prod_id = ?";
+        try {
+            con = connection.getConnection();
+            ps = con.prepareStatement(actualizarSql);
+            ps.setString(1, titulo);
+            ps.setInt(2, idProd);
+            r = ps.executeUpdate();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return r;
+    };
 
 }

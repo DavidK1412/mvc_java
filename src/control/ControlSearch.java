@@ -1,13 +1,10 @@
 package control;
-import acces.LibroDAO;
-import model.AutorModel;
+import access.LibroDAO;
 import model.LibroModel;
-import model.ProductModel;
 import view.viewMain;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
 import java.util.List;
 
 

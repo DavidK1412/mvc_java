@@ -28,10 +28,6 @@ public class connection {
             String password = (String)jsonObject.get("db_pass");
             String dbURL = "jdbc:mysql://"+host+":"+port+"/libreriareto";
             conn = DriverManager.getConnection(dbURL, username, password);
-            //Enviando a consola si se ha ejecutado correctamente
-            if (conn != null){
-                System.out.println("Conectado como: " + username + " en: " + " libreriareto!");
-            }
         }catch( SQLException | FileNotFoundException ex ) {
             ex.printStackTrace();
         }catch (IOException | ParseException ex) {
