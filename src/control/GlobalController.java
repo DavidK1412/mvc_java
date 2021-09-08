@@ -18,6 +18,8 @@ public class GlobalController implements ActionListener {
     viewMain view;
     DefaultTableModel model = new DefaultTableModel();
     ControlAdd controlAdd = new ControlAdd();
+    ControlSearch controlSearch = new ControlSearch();
+    ControlDelete controlDelete = new ControlDelete();
     //Constructor GlobalController, Instancia la vista/Interfaz y crea Listeners para cada botón
     public GlobalController(viewMain view){
         this.view = view;
@@ -62,11 +64,42 @@ public class GlobalController implements ActionListener {
                 view.errorLabel.setText("Error!: " + exc.getMessage());
             }
         }else if(e.getSource() == this.view.getBtnBuscar()){
-            System.out.println("Click");
+            try {
+                ControlClear.limpiarTabla(view);
+                int errAdd =controlSearch.buscarLibro(view ,view.resultadoTable, model);
+                if(errAdd == 1) {
+                    view.status.setForeground(Color.GREEN); //Coloreando mensajes
+                    view.status.setText("Busqueda con éxito!");
+                }else{
+                    view.status.setForeground(Color.RED); //Coloreando mensajes
+                    view.status.setText("Busqueda sin éxito");
+                }
+            }catch (Exception exc){
+                view.status.setForeground(Color.RED); //Coloreando mensajes
+                view.status.setText("Error!");
+                view.errorLabel.setForeground(Color.RED); //En caso de que hayan errores, se escriben en pantalla
+                view.errorLabel.setText("Error!: " + exc.getMessage());
+            }
         }else if(e.getSource() == this.view.getBtnActualizar()){
-            System.out.println("Click");
+
         }else if(e.getSource() == this.view.getBtnBorrar()){
-            System.out.println("Click");
+            try {
+                ControlClear.limpiarTabla(view);
+                int result = controlDelete.delete(view);
+                if (result == 1){
+                    view.status.setForeground(Color.GREEN); //Coloreando mensajes
+                    view.status.setText("Registro eliminado!");
+                }else {
+                    view.status.setForeground(Color.RED); //Coloreando mensajes
+                    view.status.setText("Operación sin exito!");
+                }
+                ControlListAll.listAll(view ,view.resultadoTable, model, libDAO);
+            }catch (Exception exc){
+                view.status.setForeground(Color.RED); //Coloreando mensajes
+                view.status.setText("Error!");
+                view.errorLabel.setForeground(Color.RED); //En caso de que hayan errores, se escriben en pantalla
+                view.errorLabel.setText("Error!: " + exc.getMessage());
+            }
         }
     }
 

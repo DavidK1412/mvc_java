@@ -119,6 +119,162 @@ public class LibroDAO {
         }
         return 1;
     };
+    //MÉTODOS PARA BUSCAR
+    public List buscarPorTitulo(String titulo){
+        List<LibroModel> datosLibros = new ArrayList<>();
+        try {
+            String consulta = "SELECT producto.prod_id, producto.prod_titulo, libro.lib_anio, autor.aut_nombre, autor.aut_apellido, autor.aut_id FROM libro JOIN producto ON producto.prod_id = libro.lib_id_fk JOIN autor ON libro.lib_autor_fk = autor.aut_id WHERE prod_titulo LIKE ? ORDER BY producto.prod_id ASC;";
+            con = connection.getConnection();
+            ps = con.prepareStatement(consulta);
+            ps.setString(1, "%"+titulo+"%");
+            rs = ps.executeQuery();
+            while (rs.next()){
+                LibroModel lib = new LibroModel();
+                String aut_nombre = rs.getString(4);
+                String ape = rs.getString(5);
+                if(ape != null) { //Verificando si autor tiene apellido
+                    aut_nombre = rs.getString(4) + " " + ape;
+                }
+                lib.setId_fk(rs.getInt(1));
+                lib.setTitulo(rs.getString(2));
+                lib.setLib_anio(rs.getInt(3));
+                lib.setAutor(aut_nombre);
+                lib.setAutor_id_fk(rs.getInt(6));
+                datosLibros.add(lib);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return datosLibros;
+    }
 
+    public List buscarPorAnnio(int annio){
+        List<LibroModel> datosLibros = new ArrayList<>();
+        try {
+            String consulta = "SELECT producto.prod_id, producto.prod_titulo, libro.lib_anio, autor.aut_nombre, autor.aut_apellido, autor.aut_id FROM libro JOIN producto ON producto.prod_id = libro.lib_id_fk JOIN autor ON libro.lib_autor_fk = autor.aut_id WHERE libro.lib_anio = ? ORDER BY producto.prod_id ASC;";
+            con = connection.getConnection();
+            ps = con.prepareStatement(consulta);
+            ps.setInt(1, annio);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                LibroModel lib = new LibroModel();
+                String aut_nombre = rs.getString(4);
+                String ape = rs.getString(5);
+                if(ape != null) { //Verificando si autor tiene apellido
+                    aut_nombre = rs.getString(4) + " " + ape;
+                }
+                lib.setId_fk(rs.getInt(1));
+                lib.setTitulo(rs.getString(2));
+                lib.setLib_anio(rs.getInt(3));
+                lib.setAutor(aut_nombre);
+                lib.setAutor_id_fk(rs.getInt(6));
+                datosLibros.add(lib);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return datosLibros;
+    }
 
+    public List buscarPorAutor(String nombre){
+        List<LibroModel> datosLibros = new ArrayList<>();
+        try {
+            String consulta = "SELECT producto.prod_id, producto.prod_titulo, libro.lib_anio, autor.aut_nombre, autor.aut_apellido, autor.aut_id FROM libro JOIN producto ON producto.prod_id = libro.lib_id_fk JOIN autor ON libro.lib_autor_fk = autor.aut_id WHERE autor.aut_nombre LIKE ? ORDER BY producto.prod_id ASC;";
+            con = connection.getConnection();
+            ps = con.prepareStatement(consulta);
+            ps.setString(1, "%"+nombre+"%");
+            rs = ps.executeQuery();
+            while (rs.next()){
+                LibroModel lib = new LibroModel();
+                String aut_nombre = rs.getString(4);
+                String ape = rs.getString(5);
+                if(ape != null) { //Verificando si autor tiene apellido
+                    aut_nombre = rs.getString(4) + " " + ape;
+                }
+                lib.setId_fk(rs.getInt(1));
+                lib.setTitulo(rs.getString(2));
+                lib.setLib_anio(rs.getInt(3));
+                lib.setAutor(aut_nombre);
+                lib.setAutor_id_fk(rs.getInt(6));
+                datosLibros.add(lib);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return datosLibros;
+    }
+
+    public List buscarPorAutorId(int autiId){
+        List<LibroModel> datosLibros = new ArrayList<>();
+        try {
+            String consulta = "SELECT producto.prod_id, producto.prod_titulo, libro.lib_anio, autor.aut_nombre, autor.aut_apellido, autor.aut_id FROM libro JOIN producto ON producto.prod_id = libro.lib_id_fk JOIN autor ON libro.lib_autor_fk = autor.aut_id WHERE lib_autor_fk = ? ORDER BY producto.prod_id ASC;";
+            con = connection.getConnection();
+            ps = con.prepareStatement(consulta);
+            ps.setInt(1, autiId);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                LibroModel lib = new LibroModel();
+                String aut_nombre = rs.getString(4);
+                String ape = rs.getString(5);
+                if(ape != null) { //Verificando si autor tiene apellido
+                    aut_nombre = rs.getString(4) + " " + ape;
+                }
+                lib.setId_fk(rs.getInt(1));
+                lib.setTitulo(rs.getString(2));
+                lib.setLib_anio(rs.getInt(3));
+                lib.setAutor(aut_nombre);
+                lib.setAutor_id_fk(rs.getInt(6));
+                datosLibros.add(lib);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return datosLibros;
+    }
+
+    public List buscarPorId(int libId){
+        List<LibroModel> datosLibros = new ArrayList<>();
+        try {
+            String consulta = "SELECT producto.prod_id, producto.prod_titulo, libro.lib_anio, autor.aut_nombre, autor.aut_apellido, autor.aut_id FROM libro JOIN producto ON producto.prod_id = libro.lib_id_fk JOIN autor ON libro.lib_autor_fk = autor.aut_id WHERE libro.lib_id_fk = ? ORDER BY producto.prod_id ASC;";
+            con = connection.getConnection();
+            ps = con.prepareStatement(consulta);
+            ps.setInt(1, libId);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                LibroModel lib = new LibroModel();
+                String aut_nombre = rs.getString(4);
+                String ape = rs.getString(5);
+                if(ape != null) { //Verificando si autor tiene apellido
+                    aut_nombre = rs.getString(4) + " " + ape;
+                }
+                lib.setId_fk(rs.getInt(1));
+                lib.setTitulo(rs.getString(2));
+                lib.setLib_anio(rs.getInt(3));
+                lib.setAutor(aut_nombre);
+                lib.setAutor_id_fk(rs.getInt(6));
+                datosLibros.add(lib);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return datosLibros;
+    }
+
+    //MÉTODO PARA ELIMINAR LIBRO
+    public int eliminarLibro(int id){
+        int r = 0;
+        String eliminar = "DELETE FROM libro WHERE lib_id_fk = ?";
+        try{
+            con = connection.getConnection();
+            ps = con.prepareStatement(eliminar);
+            ps.setInt(1, id);
+            r = ps.executeUpdate();
+            if(r == 1){
+                r = productDAO.eliminarProducto(id);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return r;
+    }
 }

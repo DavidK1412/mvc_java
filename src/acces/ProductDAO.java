@@ -29,4 +29,18 @@ public class ProductDAO {
         return r; //Retorna si la inserción se hizo correctamente.
     };
 
+    public int eliminarProducto(int id){
+        int r = 0;
+        String sql = "DELETE FROM producto WHERE prod_id = ?;";
+        try{
+            con = connection.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            r = ps.executeUpdate();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return r;
+    }
+
 }

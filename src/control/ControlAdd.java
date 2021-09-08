@@ -14,13 +14,9 @@ public class ControlAdd {
     ProductModel productModel = new ProductModel();
     public int add(viewMain view){
         //No es necesario llenar las ID ya que son autoincrementables, en caso de que se llenen tomarán valores
-        if((view.autoridTF.getText().isEmpty() != true && view.idTF.getText().isEmpty() != true) ) {
-            int autId = Integer.parseInt(view.autoridTF.getText());
-            int libId = Integer.parseInt(view.idTF.getText());
-            libroModel.setAutor_id_fk(autId);
-            libroModel.setId_fk(libId);
-            autorModel.setAut_id(autId);
-            productModel.setProd_id(libId);
+        if((view.autoridTF.getText().isEmpty() != true || view.idTF.getText().isEmpty() != true) ) {
+            JOptionPane.showMessageDialog(view, "Al añadir, dejar campos de Id's vacios");
+            return 0;
         }
         int comprobacionCampos = comprobarVacios(view);
         if(comprobacionCampos == 0) {
